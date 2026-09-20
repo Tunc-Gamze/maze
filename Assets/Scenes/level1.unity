@@ -2754,14 +2754,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -8737447715413722146, guid: 00eec2a0957d34a4a80a63b74629d246, type: 3}
-      propertyPath: m_Radius
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 283910292602366401, guid: 00eec2a0957d34a4a80a63b74629d246, type: 3}
-      propertyPath: MoveSpeed
-      value: 750
-      objectReference: {fileID: 0}
     - target: {fileID: 283910292602366402, guid: 00eec2a0957d34a4a80a63b74629d246, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3499,6 +3491,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+  - component: {fileID: 700000010}
   - component: {fileID: 626124662}
   - component: {fileID: 626124661}
   - component: {fileID: 626124660}
@@ -4656,7 +4649,7 @@ GameObject:
   - component: {fileID: 854525822}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12155,3 +12148,15 @@ Transform:
   m_Father: {fileID: 854525825}
   m_RootOrder: 84
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &700000010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626124659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f5cd10eef085a449e4740d8915566a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
