@@ -4,12 +4,30 @@ using UnityEngine;
 
 namespace RunnerGame
 {
+    public enum LevelSource { Authored = 0, Generated = 1 }
+
     [Serializable]
     public sealed class LevelDefinition
     {
         public string id;
         public string title;
+        public LevelSource source;
         public TextAsset map;
+        public MazeGenerationSettings generation = new MazeGenerationSettings();
+
+        public LevelLayout CreateLayout()
+        {
+            switch (source)
+            {
+                case LevelSource.Authored:
+                    if (map == null) throw new InvalidOperationException("Authored level needs a map: " + id);
+                    return new LevelLayout(map.text);
+                case LevelSource.Generated:
+                    return MazeGenerator.Generate(generation);
+                default:
+                    throw new InvalidOperationException("Unknown level source: " + id);
+            }
+        }
     }
 
     [CreateAssetMenu(menuName = "Runner Game/Game Config")]
@@ -35,9 +53,10 @@ namespace RunnerGame
             var ids = new HashSet<string>();
             foreach (LevelDefinition level in levels)
             {
-                if (level == null || string.IsNullOrEmpty(level.id) || !ids.Add(level.id) || level.map == null)
-                    throw new InvalidOperationException("Each level needs a unique stable ID and a map.");
-                new LevelLayout(level.map.text);
+                if (level == null || string.IsNullOrEmpty(level.id) || !ids.Add(level.id))
+                    throw new InvalidOperationException("Each level needs a unique stable ID.");
+                try { level.CreateLayout(); }
+                catch (Exception error) { throw new InvalidOperationException("Invalid level '" + level.id + "': " + error.Message, error); }
             }
         }
     }

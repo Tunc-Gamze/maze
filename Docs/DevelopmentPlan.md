@@ -38,8 +38,10 @@ boyunca hedefe alternatif yol korunur.
 10. UI/ses/gorsel polish, performans, Android build ve cihaz kabul testleri.
     Magaza yayin gereksinimleri ayrica dogrulanir.
 
-M2-M6 sirasiyla uygulandi. Guncel rapor ve manuel kabul listesi:
-[Milestones2-6.md](Milestones2-6.md). M7 baslatilmadi.
+M2-M6 sirasiyla uygulandi ve kullanici kabul testlerini onayladi:
+[Milestones2-6.md](Milestones2-6.md).
+M7 uygulama ve manuel kabul raporu: [Milestone7.md](Milestone7.md).
+M8 ve M9 baslatilmadi.
 
 ## Milestone 1 - yapilanlar
 - Assets/prefabs/Player.prefab tek Player olarak korundu; GUID degismedi.

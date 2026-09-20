@@ -91,6 +91,32 @@ namespace RunnerGame
             return button;
         }
 
+        public static RectTransform ScrollList(Transform parent)
+        {
+            RectTransform viewport = Panel("Level List", parent, new Color(0.03f, 0.06f, 0.1f, 0.7f));
+            viewport.gameObject.AddComponent<RectMask2D>();
+            var size = viewport.gameObject.AddComponent<LayoutElement>();
+            size.minHeight = 100f;
+            size.preferredHeight = 240f;
+            size.flexibleHeight = 1f;
+            var scroll = viewport.gameObject.AddComponent<ScrollRect>();
+            scroll.viewport = viewport;
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.scrollSensitivity = 30f;
+            RectTransform content = Rect("Levels", viewport);
+            Anchor(content, new Vector2(0f, 1f), Vector2.one);
+            content.pivot = new Vector2(0.5f, 1f);
+            Vertical(content, 8f);
+            content.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperCenter;
+            content.GetComponent<VerticalLayoutGroup>().padding = new RectOffset(8, 8, 8, 8);
+            content.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            scroll.content = content;
+            viewport.gameObject.AddComponent<ScrollSelectionIntoView>();
+            return content;
+        }
+
         public static void Clear(Transform parent)
         {
             foreach (Transform child in parent)

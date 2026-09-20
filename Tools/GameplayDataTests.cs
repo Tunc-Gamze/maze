@@ -75,6 +75,10 @@ internal static class GameplayDataTests
         Check(negative && progress.BestScore(0) == 500, "Negative score corrupted save");
         store.Values["level.two.best"] = -99;
         Check(progress.BestScore(1) == 0, "Malformed negative saved score not clamped");
+        var extended = new ProgressionService(new[] { "one", "two", "three", "four", "five", "six" }, store);
+        Check(extended.HighestUnlocked == 3 && !extended.IsUnlocked(4), "Appending levels broke completed campaign progression");
+        Check(extended.BestScore(0) == 500 && extended.BestScore(2) == 300, "Appending levels lost existing best scores");
         Console.WriteLine(checks + " data checks passed; no Unity runtime behavior tested.");
+        MazeGenerationTests.Run(args[0]);
     }
 }

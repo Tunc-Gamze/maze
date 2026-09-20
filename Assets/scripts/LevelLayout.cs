@@ -20,6 +20,7 @@ namespace RunnerGame
         public Cell Goal { get; private set; }
         public readonly List<Cell> Coins = new List<Cell>();
         public bool IsWall(int x, int y) => rows[y][x] == '#';
+        public string ToText() => string.Join("\n", rows);
 
         public LevelLayout(string text)
         {

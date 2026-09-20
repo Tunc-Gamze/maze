@@ -11,7 +11,7 @@ namespace RunnerGame
 
         public void Load(GameConfig config, int index, GameSession session)
         {
-            Layout = new LevelLayout(config.levels[index].map.text);
+            Layout = config.levels[index].CreateLayout();
             Builder = new GameObject("Maze").AddComponent<MazeBuilder>();
             Builder.transform.SetParent(transform, false);
             Builder.Build(Layout, config);

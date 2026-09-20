@@ -27,18 +27,19 @@ namespace RunnerGame
                 ProgressionService progress = SaveService.Progress(config);
                 UIFactory.Button(card, "Devam et · Bölüm " + (progress.HighestUnlocked + 1),
                     () => SceneNavigator.Play(progress.HighestUnlocked));
+                RectTransform list = UIFactory.ScrollList(card);
                 for (int i = 0; i < config.levels.Length; i++)
                 {
                     int selected = i;
                     bool unlocked = progress.IsUnlocked(i);
                     string title = (i + 1) + " · " + config.levels[i].title + (unlocked ?
                         "   |   En iyi: " + progress.BestScore(i) : "   |   Kilitli");
-                    UIFactory.Button(card, title, () =>
+                    UIFactory.Button(list, title, () =>
                     {
                         if (progress.IsUnlocked(selected)) SceneNavigator.Play(selected);
                     }).interactable = unlocked;
                 }
-                UIFactory.Label(card, "Mobil: telefonu eğ  •  Bilgisayar: WASD / ok tuşları", 22, 50f);
+                UIFactory.Label(card, "Bölüm listesini kaydırarak diğer bölümleri görebilirsiniz.\nMobil: telefonu eğ  •  Bilgisayar: WASD / ok tuşları", 22, 50f);
             }
             catch (Exception error)
             {
