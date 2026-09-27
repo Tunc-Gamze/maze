@@ -8,6 +8,7 @@ namespace RunnerGame
         public Vector3 Spawn { get; private set; }
         public LevelLayout Layout { get; private set; }
         public MazeBuilder Builder { get; private set; }
+        public CoinSpawner Coins { get; private set; }
 
         public void Load(GameConfig config, int index, GameSession session)
         {
@@ -18,7 +19,8 @@ namespace RunnerGame
             Spawn = Builder.Position(Layout.Start, Layout);
             Player = Instantiate(config.playerPrefab, Spawn, Quaternion.identity).GetComponent<PlayerMotor>();
             Player.gameObject.AddComponent<PlayerRespawn>().Initialize(session, Builder.Bounds);
-            gameObject.AddComponent<CoinSpawner>().Spawn(Layout, Builder, config, session);
+            Coins = gameObject.AddComponent<CoinSpawner>();
+            Coins.Spawn(Layout, Builder, config, session, config.levels[index].coins);
 
             GameObject goal = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             goal.name = "Goal";

@@ -11,6 +11,8 @@ namespace RunnerGame
         public SessionState State { get; private set; } = SessionState.Loading;
         public int LevelIndex { get; private set; }
         public PlayerMotor Player => level == null ? null : level.Player;
+        public CoinSpawner Coins => level == null ? null : level.Coins;
+        public bool CoinTimeRunning => State == SessionState.Playing && Player != null && !Player.Controls.IsCalibrating;
         public bool HasNextLevel => LevelIndex + 1 < config.levels.Length;
         public ScoreService Score { get; } = new ScoreService();
         public ProgressionService Progress { get; private set; }
@@ -33,7 +35,7 @@ namespace RunnerGame
                 level = gameObject.AddComponent<LevelManager>();
                 level.Load(config, LevelIndex, this);
                 Player.Controls.Sensitivity = SaveService.Sensitivity;
-                Score.Reset(level.Layout.Coins.Count);
+                Score.Reset(Coins.Budget);
                 ui.RefreshHUD();
                 State = SessionState.Playing;
             }
@@ -97,7 +99,8 @@ namespace RunnerGame
 
         public bool TryCollectCoin(PlayerMotor player, int id)
         {
-            if (State != SessionState.Playing || player != Player || !Score.TryCollect(id)) return false;
+            if (!CoinTimeRunning || player != Player || !Score.CanCollect(id) || !Coins.TryCollect(id)) return false;
+            Score.TryCollect(id);
             ui.RefreshHUD();
             return true;
         }

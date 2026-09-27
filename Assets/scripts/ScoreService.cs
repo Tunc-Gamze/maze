@@ -18,6 +18,7 @@ namespace RunnerGame
             collected.Clear();
         }
 
-        public bool TryCollect(int id) => id >= 0 && id < Available && collected.Add(id);
+        public bool CanCollect(int id) => id >= 0 && id < Available && !collected.Contains(id);
+        public bool TryCollect(int id) => CanCollect(id) && collected.Add(id);
     }
 }

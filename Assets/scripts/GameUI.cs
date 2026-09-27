@@ -35,6 +35,7 @@ namespace RunnerGame
         {
             if (session == null || session.Player == null || status == null) return;
             PlayerInput input = session.Player.Controls;
+            if (session.Coins != null && session.Coins.IsTimed) RefreshHUD();
             if (pauseStatus != null)
                 pauseStatus.text = input.IsCalibrating ? "Telefonu sabit tutun… Kalibrasyon sürüyor." :
                     !string.IsNullOrEmpty(session.SaveWarning) ? session.SaveWarning :
@@ -43,6 +44,9 @@ namespace RunnerGame
                 input.SensorUnavailable ? "Eğim sensörü bulunamadı. Bu cihazda tilt kontrolü kullanılamıyor." :
                 input.UsesTilt ? "Telefonu eğerek yeşil hedefe ulaşın. Coinler isteğe bağlıdır." :
                 "WASD / ok tuşları: hareket   •   Esc: duraklat   •   C: kalibrasyon";
+            if (session.Coins != null && session.Coins.IsTimed && !input.IsCalibrating && !input.SensorUnavailable)
+                status.text = (input.UsesTilt ? "Telefonu eğ" : "WASD / oklar • Esc: duraklat") +
+                    " • Coinler isteğe bağlı • Yanıp sönen coin kaybolmak üzere";
         }
 
         public void HideDialog() => overlay.gameObject.SetActive(false);
@@ -51,6 +55,12 @@ namespace RunnerGame
         {
             hud.text = "Bölüm " + (session.LevelIndex + 1) + "   •   Coin " + session.Score.Coins +
                 "/" + session.Score.Available + "   •   Skor " + session.Score.Score;
+            if (session.Coins == null || !session.Coins.IsTimed) return;
+            TimedCoinCycle cycle = session.Coins.Cycle;
+            double nearest = double.MaxValue;
+            foreach (var coin in cycle.Active) nearest = System.Math.Min(nearest, cycle.Remaining(coin));
+            string time = nearest == double.MaxValue ? "" : " • Süre: " + Mathf.CeilToInt((float)nearest) + " sn";
+            hud.text += "\nAktif: " + cycle.Active.Count + " • Sırada: " + cycle.Pending + " • Kaçan: " + cycle.Expired + time;
         }
 
         private void BeginDialog(string title)
@@ -81,6 +91,9 @@ namespace RunnerGame
             UIFactory.Label(card, "Bölüm " + (session.LevelIndex + 1) + " tamamlandı.");
             UIFactory.Label(card, "Coin: " + session.Score.Coins + "/" + session.Score.Available +
                 "   •   Skor: " + session.Score.Score, 28, 52f);
+            if (session.Coins.IsTimed)
+                UIFactory.Label(card, "Süresi dolan: " + session.Coins.Cycle.Expired +
+                    " • Toplanmayan toplam: " + (session.Score.Available - session.Score.Coins), 24, 38f);
             UIFactory.Label(card, string.IsNullOrEmpty(session.SaveWarning) ?
                 "En iyi skor: " + session.Progress.BestScore(session.LevelIndex) : session.SaveWarning, 25);
             if (session.HasNextLevel)

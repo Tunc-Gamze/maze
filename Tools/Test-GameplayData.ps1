@@ -3,7 +3,8 @@ $unityData = 'C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data'
 $output = Join-Path $PSScriptRoot '../Temp/Validation/DataTests.exe'
 New-Item -ItemType Directory -Force (Split-Path $output) | Out-Null
 $sources = @("$PSScriptRoot/GameplayDataTests.cs", "$PSScriptRoot/MazeGenerationTests.cs", "$PSScriptRoot/../Assets/scripts/LevelLayout.cs", "$PSScriptRoot/../Assets/scripts/MazeGenerator.cs", "$PSScriptRoot/../Assets/scripts/MazeGenerationSettings.cs")
-foreach ($name in @('ScoreService', 'ProgressionService')) {
+$sources += "$PSScriptRoot/TimedCoinTests.cs"
+foreach ($name in @('ScoreService', 'ProgressionService', 'CoinSpawnSettings', 'TimedCoinCycle')) {
     $path = "$PSScriptRoot/../Assets/scripts/$name.cs"
     if (Test-Path $path) { $sources += $path }
 }

@@ -41,7 +41,8 @@ boyunca hedefe alternatif yol korunur.
 M2-M6 sirasiyla uygulandi ve kullanici kabul testlerini onayladi:
 [Milestones2-6.md](Milestones2-6.md).
 M7 uygulama ve manuel kabul raporu: [Milestone7.md](Milestone7.md).
-M8 ve M9 baslatilmadi.
+M8 uygulama ve manuel kabul raporu: [Milestone8.md](Milestone8.md).
+M9 baslatilmadi.
 
 ## Milestone 1 - yapilanlar
 - Assets/prefabs/Player.prefab tek Player olarak korundu; GUID degismedi.

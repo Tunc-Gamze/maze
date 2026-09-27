@@ -14,6 +14,7 @@ namespace RunnerGame
         public LevelSource source;
         public TextAsset map;
         public MazeGenerationSettings generation = new MazeGenerationSettings();
+        public CoinSpawnSettings coins = new CoinSpawnSettings();
 
         public LevelLayout CreateLayout()
         {
@@ -55,7 +56,12 @@ namespace RunnerGame
             {
                 if (level == null || string.IsNullOrEmpty(level.id) || !ids.Add(level.id))
                     throw new InvalidOperationException("Each level needs a unique stable ID.");
-                try { level.CreateLayout(); }
+                try
+                {
+                    LevelLayout layout = level.CreateLayout();
+                    if (level.coins == null) throw new InvalidOperationException("Coin settings are missing.");
+                    level.coins.Validate(layout);
+                }
                 catch (Exception error) { throw new InvalidOperationException("Invalid level '" + level.id + "': " + error.Message, error); }
             }
         }

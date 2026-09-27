@@ -20,18 +20,26 @@ MonoBehaviour:
   levels:
   - id: first-steps
     title: İlk Adımlar
+    coins:
+      mode: 0
     source: 0
     map: {fileID: 4900000, guid: cfd1d9cb98f443efa5974247b4cdf09a, type: 3}
   - id: crossroads
     title: Yol Ayrımı
+    coins:
+      mode: 0
     source: 0
     map: {fileID: 4900000, guid: 0c0b1b55f58242d9969d6fc1e16c15bd, type: 3}
   - id: long-way
     title: Uzun Yol
+    coins:
+      mode: 0
     source: 0
     map: {fileID: 4900000, guid: 8878410e740d4b169e158247a5ba9113, type: 3}
   - id: maze-v1-forest
     title: Kıvrımlı Yollar
+    coins:
+      mode: 0
     source: 1
     map: {fileID: 0}
     generation:
@@ -43,6 +51,8 @@ MonoBehaviour:
       extraConnections: 1
   - id: maze-v1-crossing
     title: Geçitler
+    coins:
+      mode: 0
     source: 1
     map: {fileID: 0}
     generation:
@@ -54,6 +64,8 @@ MonoBehaviour:
       extraConnections: 2
   - id: maze-v1-depths
     title: Derin Labirent
+    coins:
+      mode: 0
     source: 1
     map: {fileID: 0}
     generation:
@@ -63,3 +75,43 @@ MonoBehaviour:
       seed: 6303
       coinCount: 10
       extraConnections: 1
+  - id: timed-v1-grove
+    title: Altın Fırsatlar
+    source: 1
+    map: {fileID: 0}
+    generation:
+      generatorVersion: 1
+      width: 13
+      height: 11
+      seed: 7404
+      coinCount: 12
+      extraConnections: 2
+    coins:
+      mode: 1
+      seed: 8701
+      totalCoins: 10
+      maxActive: 3
+      initialDelay: 2
+      spawnInterval: 6
+      lifetime: 30
+      warningSeconds: 5
+  - id: timed-v1-vault
+    title: Zamanlı Hazine
+    source: 1
+    map: {fileID: 0}
+    generation:
+      generatorVersion: 1
+      width: 15
+      height: 13
+      seed: 8505
+      coinCount: 16
+      extraConnections: 2
+    coins:
+      mode: 1
+      seed: 8802
+      totalCoins: 12
+      maxActive: 4
+      initialDelay: 2
+      spawnInterval: 5
+      lifetime: 26
+      warningSeconds: 5

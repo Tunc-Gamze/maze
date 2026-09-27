@@ -78,7 +78,12 @@ internal static class GameplayDataTests
         var extended = new ProgressionService(new[] { "one", "two", "three", "four", "five", "six" }, store);
         Check(extended.HighestUnlocked == 3 && !extended.IsUnlocked(4), "Appending levels broke completed campaign progression");
         Check(extended.BestScore(0) == 500 && extended.BestScore(2) == 300, "Appending levels lost existing best scores");
+        extended.Complete(3, 0); extended.Complete(4, 0); extended.Complete(5, 200);
+        var withTimed = new ProgressionService(new[] { "one", "two", "three", "four", "five", "six", "seven", "eight" }, store);
+        Check(withTimed.HighestUnlocked == 6 && !withTimed.IsUnlocked(7), "Completed M7 campaign did not unlock first timed level");
+        Check(withTimed.BestScore(0) == 500 && withTimed.BestScore(5) == 200, "Timed level extension changed existing best scores");
         Console.WriteLine(checks + " data checks passed; no Unity runtime behavior tested.");
         MazeGenerationTests.Run(args[0]);
+        TimedCoinTests.Run(args[0]);
     }
 }
